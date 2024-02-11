@@ -11,10 +11,18 @@ class Notification(BaseMetadataModel):
     This class represents a notification.
     """
 
-    profile = models.ForeignKey(
+    sender = models.ForeignKey(
         'profiles.Profile', 
         on_delete=models.CASCADE, 
-        related_name='notifications'
+        related_name='sent_notifications',
+        null=True,
+        blank=True
+    )
+
+    receiver = models.ForeignKey(
+        'profiles.Profile', 
+        on_delete=models.CASCADE, 
+        related_name='received_notifications',
     )
 
     interface = models.CharField(
@@ -32,7 +40,6 @@ class Notification(BaseMetadataModel):
         blank=True,
         default=dict
     )
-
 
     def __str__(self):
         """
