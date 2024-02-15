@@ -46,3 +46,21 @@ class Notification(BaseMetadataModel):
         Returns the string representation of the notification.
         """
         return ''
+    
+class NotificationMessage(BaseMetadataModel):
+    """
+    This class represents a notification message.
+    """
+
+    interface = models.CharField(
+        max_length=255, 
+        null=True, 
+        blank=True,
+        choices=NOTIFICATION_RULESTACK.models_choices()
+    )
+
+    message = models.TextField(
+        null=True, 
+        blank=True,
+        unique=True,
+    )
