@@ -14,29 +14,23 @@ class NotificationAdmin(admin.ModelAdmin):
         'interface', 
     )
 
-class NotificationTemplateAdmin(admin.ModelAdmin):
+class NotificationTranslateInline(admin.TabularInline):
     """
-        @description: JobCategoryInline
+        @description: NotificationTranslateInline
     """
 
     model = NotificationTemplateTranslate
     extra = 0
 
     fields = [
-        'language', 
-        'object', 
-        'message']
-    readonly_fields = ['link']
+        'language',
+        'object',
+        'message',
+    ]
     formfield_overrides = {
 
     }
-
-    def link(self, obj):
-        if obj.pk is None:
-            return ''
-        return mark_safe(
-            '<a href="/admin/jobs/job/' + str(obj.pk) + '/change/" target="_blank">OPEN</a>'
-        )
+ 
     
 @admin.register(NotificationTemplate)
 class NotificationTemplateAdmin(admin.ModelAdmin):
@@ -45,6 +39,7 @@ class NotificationTemplateAdmin(admin.ModelAdmin):
         'interface',
         'message',
     )
+    inlines = [NotificationTranslateInline]
 
 @admin.register(NotificationUnsubscribe)
 class NotificationUnsubscribeAdmin(admin.ModelAdmin):
