@@ -9,49 +9,8 @@ from django.forms.models import model_to_dict
 from kernel.models.serialize import serializer__serialize__, serializer__init__
 from kernel.i18n.models import translateDBQuerySet, translateDBObject
 
-class Notification(BaseMetadataModel):
-    """
-    This class represents a notification.
-    """
 
-    sender = models.ForeignKey(
-        'profiles.Profile', 
-        on_delete=models.CASCADE, 
-        related_name='sent_notifications',
-        null=True,
-        blank=True
-    )
-
-    receiver = models.ForeignKey(
-        'profiles.Profile', 
-        on_delete=models.CASCADE, 
-        related_name='received_notifications',
-    )
-
-    interface = models.CharField(
-        max_length=255, 
-        choices=NOTIFICATION_RULESTACK.models_choices()
-    )    
-
-    expiration = models.DateTimeField(
-        null=True, 
-        blank=True
-    )
-
-    params = models.JSONField(
-        null=True, 
-        blank=True,
-        default=dict
-    )
-
-    def __str__(self):
-        """
-        Returns the string representation of the notification.
-        """
-        return ''
-    
-
-class NotificationMessageTranslate(BaseMetadataModel):
+class NotificationTemplateTranslate(BaseMetadataModel):
     """
         @description:
     """
@@ -77,7 +36,7 @@ class NotificationMessageTranslate(BaseMetadataModel):
     )
 
     translateObject = models.ForeignKey(
-        'notification.NotificationMessage',
+        'notification.NotificationTemplate',
         on_delete=models.CASCADE,
         related_name='translates',
         blank=True,
@@ -95,7 +54,7 @@ class NotificationMessageTranslate(BaseMetadataModel):
         serialize = model_to_dict(self)
         return serialize
 
-class NotificationMessage(BaseMetadataModel):
+class NotificationTemplate(BaseMetadataModel):
     """
     This class represents a notification message.
     """
@@ -132,3 +91,79 @@ class NotificationMessage(BaseMetadataModel):
         Returns the string representation of the notification message.
         """
         return self.message
+
+class NotificationSended(BaseMetadataModel):
+    """
+    This class represents a notification.
+    """
+
+    sender = models.ForeignKey(
+        'profiles.Profile', 
+        on_delete=models.CASCADE, 
+        related_name='sent_notifications',
+        null=True,
+        blank=True
+    )
+
+    receiver = models.ForeignKey(
+        'profiles.Profile', 
+        on_delete=models.CASCADE, 
+        related_name='received_notifications',
+    )
+
+    interface = models.CharField(
+        max_length=255, 
+        choices=NOTIFICATION_RULESTACK.models_choices()
+    )    
+
+    expiration = models.DateTimeField(
+        null=True, 
+        blank=True
+    )
+
+    params = models.JSONField(
+        null=True, 
+        blank=True,
+        default=dict
+    )
+
+    template = models.ForeignKey(
+        'notification.NotificationTemplate', 
+        on_delete=models.CASCADE, 
+        related_name='notifications',
+        null=True,
+        blank=True
+    )
+
+    state = models.CharField(
+        max_length=255, 
+        choices=(
+            ('pending', 'pending'),
+            ('sent', 'sent'),
+            ('error', 'error'),
+            ('read', 'read'),
+            ('deleted', 'deleted'),
+        ),
+        default='pending'
+    )
+
+    def __str__(self):
+        """
+        Returns the string representation of the notification.
+        """
+        return ''
+    
+class NotificationUnsubscribe(BaseMetadataModel):
+    """
+    This class represents a notification unsubscribe.
+    """
+    profile = models.ForeignKey(
+        'profiles.Profile', 
+        on_delete=models.CASCADE, 
+        related_name='unsubscribes',
+    )
+
+    interface = models.CharField(
+        max_length=255, 
+        choices=NOTIFICATION_RULESTACK.models_choices()
+    )
