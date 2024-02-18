@@ -22,14 +22,14 @@ class NotificationTemplateTranslate(BaseMetadataModel):
             ('fr', 'fr'),
         ),
     )
-    name = models.CharField(
+    object = models.CharField(
         'name',
         max_length=255,
         blank=True,
         null=True,
     )
 
-    description = models.TextField(
+    message = models.TextField(
         'description',
         blank=True,
         null=True,
@@ -58,6 +58,11 @@ class NotificationTemplate(BaseMetadataModel):
     """
     This class represents a notification message.
     """
+    translation_model = NotificationTemplateTranslate
+
+    @serializer__init__
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
 
     interface = models.CharField(
         max_length=255, 
