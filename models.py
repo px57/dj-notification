@@ -2,6 +2,7 @@
 This module contains the Notification model.
 """
 
+from django.conf import settings
 from django.db import models
 from kernel.models.base_metadata_model import BaseMetadataModel
 from notification.rules.stack import NOTIFICATION_RULESTACK
@@ -18,9 +19,7 @@ class NotificationTemplateTranslate(BaseMetadataModel):
         'language',
         max_length=255,
         default='fr',
-        choices=(
-            ('fr', 'fr'),
-        ),
+        choices=settings.LANGUAGE_DB_CHOICES,
     )
     object = models.CharField(
         'name',
