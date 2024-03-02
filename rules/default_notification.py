@@ -60,4 +60,4 @@ class DefaultRuleClass(InterfaceManager):
     def open(self, *args, **kwargs):
         return True
 
-NOTIFICATION_RULESTACK.set_rule(DefaultRuleClass())
+NOTIFICATION_RULESTACK.set_rule(DefaultRuleClass)
