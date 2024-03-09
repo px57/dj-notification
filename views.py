@@ -1,6 +1,13 @@
-from django.shortcuts import render
-from kernel.http import Response
+"""
+This file contains the views for the notification app.
+"""
 
-def __empty__(request):
+from django.shortcuts import render
+
+from kernel.http import Response
+from kernel.http import load_response
+
+@load_response()
+def __empty__(request, res):
     res = Response()
     return res.success()
