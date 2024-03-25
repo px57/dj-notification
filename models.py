@@ -4,11 +4,11 @@ This module contains the Notification model.
 
 from django.conf import settings
 from django.db import models
-from kernel.models.base_metadata_model import BaseMetadataModel
+from gpm.models.base_metadata_model import BaseMetadataModel
 from notification.rules.stack import NOTIFICATION_RULESTACK
 from django.forms.models import model_to_dict
-from kernel.models.serialize import serializer__serialize__, serializer__init__
-from kernel.i18n.models import translateDBQuerySet, translateDBObject
+from gpm.models.serialize import serializer__serialize__, serializer__init__
+from gpm.i18n.models import translateDBQuerySet, translateDBObject
 
 
 class NotificationTemplateTranslate(BaseMetadataModel):

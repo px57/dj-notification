@@ -3,9 +3,9 @@ import json
 
 from channels.generic.websocket import WebsocketConsumer
 from chatroom.managers.chat_room import CHATROOM_MANAGER
-from kernel.websocket.decorators import websocket__simplifier
-from kernel.http.request import FakeRequest
-from kernel.interfaces.decorators import load_interface
+from gpm.websocket.decorators import websocket__simplifier
+from gpm.http.request import FakeRequest
+from gpm.interfaces.decorators import load_interface
 
 class NotificationConsumer(WebsocketConsumer):
     """
